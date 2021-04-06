@@ -191,15 +191,86 @@ public class Main {
                 this.name = name;
                 this.mark = mark;
             }
+
+            @Override
+            public String toString() {
+                return "User{" +
+                        "name='" + name + '\'' +
+                        ", mark=" + mark +
+                        '}';
+            }
         }
 
         int base = 50;
-        TreeSet<User> users = new TreeSet<>();
+        TreeSet<User> users = new TreeSet<>(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return o1.mark-o2.mark;
+            }
+        });
         users.add(new User("Ivan",40));
         users.add(new User("Petr",89));
         users.add(new User("Maria",20));
         users.add(new User("Olga",36));
         users.add(new User("Max",61));
+
+        SortedSet<User> res = users.tailSet(new User("",base));
+
+
+        System.out.println(res);
+
+        /*
+        Maps - словари (пары - ключ-значение)
+        Реализации:
+        Hashtable, HashMap - неупорядочены
+         TreeMap - сортировка по ключам
+         */
+
+        /*
+        Потокобезопасная - можно использовать в многопот. приложениях (Медленнее)
+        Неупорядочено
+        null значения класть нельзя!!!
+        */
+        Hashtable<String,Integer> phones = new Hashtable<>();
+        phones.put("Ivan", 23423342);
+        phones.put("Petr", 979954);
+        phones.put("Maria", 45645645);
+        phones.put("Olga", 5675675);
+
+        /*
+        Потоконебезопасная (быстрее)
+        null можно
+         */
+        HashMap<String,String> hashMap1 = new HashMap<>();
+        hashMap1.put("key1","value1");
+        hashMap1.put("key2","value2");
+        hashMap1.put("key3","value3");
+
+        HashMap<String,String> hashMap2 = new HashMap<>();
+        hashMap1.put("key4","value4");
+        hashMap1.put("key5","value5");
+        hashMap1.put("key6","value6");
+
+        hashMap1.putAll(hashMap2);
+
+        Set<Map.Entry<String,String>> set = hashMap1.entrySet();
+        for(Map.Entry<String,String> s: set) {
+            System.out.println(s.getKey() + " - "+s.getValue());
+        }
+
+        // Сортируется по ключам - Natural Ordering
+        
+        TreeMap<Integer,String> days = new TreeMap<>();
+        days.put(3,"Monday");
+        days.put(5,"Wednesday");
+        days.put(1,"Sunday");
+
+        System.out.println(days.keySet());
+        System.out.println(days.values());
+
+        days.firstKey();
+        days.get(days.firstKey());
+
 
 
     }
